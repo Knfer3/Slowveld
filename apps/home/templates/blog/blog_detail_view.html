@@ -1,0 +1,131 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block code %}
+<style>
+    code {
+      font-family: Consolas,"courier new";
+      color: rgb(223, 6, 212);
+      background-color: #f1f1f1;
+      padding: 2px;
+      font-size: 16px;
+    }
+    pre {
+      font-family: Consolas,"courier new";
+      color: rgb(223, 6, 212);
+      background-color: #f1f1f1;
+      padding: 2px;
+      font-size: 16px;
+    }
+    </style>
+{% endblock code %}
+
+{% block content %}
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><a class="btn btn-info btn-sm mt-0" href="{% url 'home:blog-list-view' %}"><i class='fa fa-arrow-left'></i> Back </a> {{post.title}}</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+
+                    <div class="col-md-9 col-sm-9  ">
+
+                        <ul class="stats-overview">
+                            <li>
+                                <span class="name"> Created date </span>
+                                <span class="value text-success"> {{post.created_at}} </span>
+                            </li>
+                            <li>
+                                <span class="name"> Updated date </span>
+                                <span class="value text-success"> {{post.updated_at}} </span>
+                            </li>
+                            <li class="hidden-phone">
+                                <span class="name"> Category </span>
+                                <span class="value text-success"> {{post.category}} </span>
+                            </li>
+                        </ul>
+                        <br />
+
+
+                        <div class="col-md-10 col-sm-10  ">
+                            {% include post.blog_url %}
+                        </div>
+                    </div>
+
+                    <!-- start project-detail sidebar -->
+                    <div class="col-md-3 col-sm-3  ">
+
+                        <section class="panel">
+
+                            <div class="x_title">
+                                <h2>Post Description</h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+                                <h3 class="green"><i class="fa fa-paint-brush"></i> {{post.title}}</h3>
+
+                                <p>{{post.post_blurb}}</p>
+                                <br />
+
+                                <div class="project_detail">
+
+                                    <p class="title">Category</p>
+                                    <p>{{post.category}}</p>
+                                    <p class="title">Author</p>
+                                    <p>{{post.author}}</p>
+                                </div>
+
+                                <br />
+                                <h5>Buttons for later</h5>
+                                <ul class="list-unstyled project_files">
+                                    <li><a href=""><i class="fa fa-file-word-o"></i>
+                                            Functional-requirements.docx</a>
+                                    </li>
+                                    <li><a href=""><i class="fa fa-file-pdf-o"></i> UAT.pdf</a>
+                                    </li>
+                                    <li><a href=""><i class="fa fa-mail-forward"></i> Email-from-flatbal.mln</a>
+                                    </li>
+                                    <li><a href=""><i class="fa fa-picture-o"></i> Logo.png</a>
+                                    </li>
+                                    <li><a href=""><i class="fa fa-file-word-o"></i> Contract-10_12_2014.docx</a>
+                                    </li>
+                                </ul>
+                                <br />
+
+                                <div class="text-center mtop20">
+                                    <a href="#" class="btn btn-sm btn-primary">Add files</a>
+                                    <a href="#" class="btn btn-sm btn-warning">Report contact</a>
+                                </div>
+                            </div>
+
+                        </section>
+
+                    </div>
+                    <!-- end project-detail sidebar -->
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
