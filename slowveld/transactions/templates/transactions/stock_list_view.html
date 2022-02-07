@@ -1,0 +1,113 @@
+{% extends "_base.html" %}
+{% load static %}
+
+
+
+{% block content %}
+
+
+<div class="clearfix"></div>
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="display-4"><i class="fa fa-sliders"></i> STOCK </h1>
+            <!-- <hr > -->
+            <p class="lead">A list of all Slowveld input items needed to create the product</p>
+        </div>
+        <div class="col-md-4">
+            <!-- <a class='btn btn-info btn-lg' style="width:300px" data-toggle="tooltip" data-placement="right"
+                title="Create new batch of products" href="#">
+                Not in use
+            </a>
+            <a class='btn btn-info btn-lg' style="width:300px" data-toggle="tooltip" data-placement="right"
+                title="Create new batch of products" href="#">
+                Another Form
+            </a> -->
+            
+
+            <!-- <canvas id="pieChart"></canvas> -->
+
+        </div>
+    </div>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible " role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <ul class="messages">
+            <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+                <h2> {{ message }} </h2>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <ul>
+
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Stock <small>List view</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <p>Table of items in stock</p>
+
+                <!-- start project list -->
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th style="width: 1%">#</th>
+                            <th>Items</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Cost price</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in stock%}
+                        <tr {% if not item.quantity_on_hand < item.reserve_quantity %}class=''{%else%} class="red"{% endif %}>
+                            <td>{{forloop.counter}}</td>
+                            <td>
+                                <p href="#">{{item.item}}</p>
+                                <br />
+                                
+                            </td>
+                            <td><p>{{item.category}}</p></td>
+                            <td>
+                                {{item.quantity_on_hand}} {{item.uom}}
+                                <br />
+                                <small class='blue'>min: {{item.reserve_quantity}} {{item.uom}}</small>
+                            </td>
+                            <td><p>R {{item.cost_price_on_hand}}</p></td>
+
+
+                        </tr>
+                            {% endfor %}
+                    </tbody>
+                </table>
+                <!-- end project list -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+
+
+
+{% endblock content %}

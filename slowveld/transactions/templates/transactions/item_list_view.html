@@ -1,0 +1,141 @@
+{% extends "_base.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="clearfix"></div>
+<div class="clearfix"></div>
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="display-4"><i class="glyphicon glyphicon-shopping-cart"></i> Cart</h1>
+            <hr>
+            <p class="lead">Add items to the cart that will be purchased from supplier. <br>
+                Click item name to add.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-info btn-lg mt-0" 
+                style='width:250px'
+                data-toggle="tooltip" 
+                data-placement="left"
+                title="Back to purchase orders" 
+                href="{% url 'transactions:purchase-order-list-view' %}">
+                <i class='fa fa-arrow-left'></i> Back </a>
+
+            <a class='btn btn-info btn-lg mt-0'
+                 style='width:250px' 
+                 data-toggle="tooltip" 
+                 data-placement="left"
+                 title="Add order details" 
+                 href="{% url 'transactions:purchase-order-form' %}">
+                Next <i class='fa fa-arrow-right'></i> </a>
+
+        </div>
+
+
+
+    </div>
+
+    <div id="wizard" class="form_wizard wizard_horizontal">
+        <ul class="wizard_steps">
+            <li>
+                <a class='selected' href="#step-1">
+                    <span class="step_no">1</span>
+                    <span class="step_descr">
+                        Add to cart<br />
+                        <small></small>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a class='disabled' href="{% url 'transactions:purchase-order-form' %}">
+                    <span class="step_no">2</span>
+                    <span class="step_descr">
+                        Order details<br />
+                        <small></small>
+                    </span>
+                </a>
+            </li>
+
+        </ul>
+
+
+
+    </div>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible " role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <ul class="messages">
+            <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+                <h2> {{ message }} </h2>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <ul>
+
+
+</div>
+
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>
+
+            </a>Purchase cart <small>list</small>
+        </h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li><a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="x_content">
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                    <tr class="headings">
+                        <th class="column-title"> #</th>
+                        <th class="column-title">Item </th>
+                        <th class="column-title" style="width:40%">Description </th>
+                        <th class="column-title">Category </th>
+                        <th class="column-title">Quantity </th>
+                        <th class="column-title">Price </th>
+                        <th class="column-title">Cart </th>
+                        <th class="column-title">Sold in packs </th>
+
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in items %}
+                    <tr class="even pointer">
+                        <td class="">{{forloop.counter}}</td>
+                        <td class=" "><a href="{%url 'transactions:items-detail-view' pk=item.id %}">{{item.item}}</a>
+                        </td>
+                        <td class=" ">{{item.description}}</td>
+                        <td class=" ">{{item.category}}</td>
+                        <td class=" ">{{item.uom_quantity}} {{item.uom}}</td>
+                        <td class="a-right a-right ">R {{item.cost_price}}</td>
+                        <td class=" ">{{item.uom_quantity_purchased}}</td>
+                        <td class=" ">{% if item.sold_in_packs %}Yes{% else %} No {% endif %}</td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock content %}

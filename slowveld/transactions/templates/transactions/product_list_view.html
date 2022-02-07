@@ -1,0 +1,265 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block links }
+<!-- Bootstrap -->
+<link href="cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css' %}">
+<link href="{% static 'vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="{% static 'vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+<!-- NProgress -->
+<link href="{% static 'vendors/nprogress/nprogress.css' %}" rel="stylesheet">
+<!-- iCheck -->
+<link href="{% static 'vendors/iCheck/skins/flat/green.css' %}" rel="stylesheet">
+<!-- Datatables -->
+
+<link href="{% static 'vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- Custom Theme Style -->
+<link href="{% static 'build/css/custom.min.css' %}" rel="stylesheet">
+<!-- {% endblock links } -->
+
+{% block content %}
+
+
+<div class="clearfix"></div>
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="display-4"><i class="fa fa-fire"></i> PRODUCT </h1>
+            <!-- <hr > -->
+            <p class="lead">A list of all Slowveld products, their inputs and costs</p>
+        </div>
+        <div class="col-md-4">
+            <a class='btn btn-info btn-lg' 
+            style="width:300px" 
+            data-toggle="tooltip" 
+            data-placement="left"
+                title="Create new batch of products" href="{% url 'transactions:product-create-view' %}">
+                New Product
+            </a>
+            <!-- <a class='btn btn-info btn-lg' style="width:300px" data-toggle="tooltip" data-placement="right"
+                title="Create new batch of products" href="#">
+                Another Form
+            </a> -->
+            
+
+        </div>
+    </div>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible " role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <ul class="messages">
+            <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+                <h2> {{ message }} </h2>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <ul>
+
+
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Products <small>List view</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <p>Products on hand.</p>
+
+                <!-- start project list -->
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th style="width: 1%">#</th>
+                            <th>name</th>
+                            <th style="width: 50%">Description</th>
+                            <th>Products on hand</th>
+                            <th>Type</th>
+                            <th>Value of Products</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in products%}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>
+                                <a href="#">{{item.name}}</a>
+                                <br />
+                                <small>{{item.created_at}}</small>
+                            </td>
+                            <td>
+                                <p>{{item.description}}</p>
+
+                            </td>
+                            <td>
+                                <p>{{item.stock_on_hand}}</p>
+                            </td>
+                            <td>
+
+                                <p>{{item.product_type}}</p>
+
+                            </td>
+                            <td>
+
+                                <p>R {{item.product_total_cost}}</p>
+
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            {% endfor %}
+                    </tbody>
+                </table>
+                <!-- end project list -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Product <small>Input view</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <p>Candle details, inputs and cost to produce.</p>
+
+                <!-- start project list -->
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="card-box table-responsive">
+                            <table id="datatable1" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 1%">#</th>
+                                        <th>Product name</th>
+                                        <th>Cost to produce</th>
+                                        <th>Type</th>
+                                        <th>Input details</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in products%}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>
+                                            <a href="#">{{item.name}}</a>
+                                            <br />
+                                            <small>{{item.created_at}}</small>
+                                        </td>
+                                        <td>R {{item.product_cost_per_item}}</td>
+                                        <td>{{item.product_type}}</td>
+                                        <td>
+                                            <table class="table table-striped projects">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Input name</th>
+                                                        <th>Quantity required</th>
+                                                        <th>Input cost</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for input in item.inputs.all %}
+                                                    <tr>
+                                                        <td>{{input.input_item}}</td>
+                                                        <td>{{input.input_quantity}} {{input.input_uom}}</td>
+                                                        <td>R {{input.new_product_input_cost}}</td>
+                                                    </tr>
+                                                    {% endfor %}
+
+                                                </tbody>
+
+
+                                            </table>
+
+                                        </td>
+
+
+                                    </tr>
+                                    <tr>
+
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- end project list -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock content %}
+
+
+{% block js %}
+<!-- jQuery -->
+<script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'vendors/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'vendors/fastclick/lib/fastclick.js' %}"></script>
+<!-- NProgress -->
+<script src="{% static 'vendors/nprogress/nprogress.js' %}"></script>
+<!-- iCheck -->
+<script src="{% static 'vendors/iCheck/icheck.min.js' %}"></script>
+<!-- Datatables -->
+<script src="{% static 'vendors/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-scroller/js/dataTables.scroller.min.js' %}"></script>
+<script src="{% static 'vendors/jszip/dist/jszip.min.js' %}"></script>
+<script src="{% static 'vendors/pdfmake/build/pdfmake.min.js' %}"></script>
+<script src="{% static 'vendors/pdfmake/build/vfs_fonts.js' %}"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="{% static 'build/js/custom.js' %}"></script>
+{% endblock js %}

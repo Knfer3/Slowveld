@@ -1,0 +1,12 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block content %}
+<button class="btn btn-success" href="{% url 'transactions:add-to-purchase-order' %}">Add Purchase Order</button>
+    
+<br>
+{% for item in object_list %}
+        {{item}}
+
+    {% endfor %}
+{% endblock content %}

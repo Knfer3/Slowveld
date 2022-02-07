@@ -1,0 +1,170 @@
+{% extends '_base.html' %}
+{% load static %}
+
+
+
+
+{% block content %}
+
+<div class="clearfix"></div>
+<div class="jumbotron">
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <h1 class="display-4"><i class="fa fa-leaf"></i> Sales order inputs</h1>
+            <hr>
+            <p class="lead">Add all the products with quantities to fulfill orders<br>
+                Add one product at a time
+            </p>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-info btn-lg mt-0" style='width:250px' data-toggle="tooltip" data-placement="left"
+                title="Back to sales orders" href="{% url 'transactions:sale-order-list-view'  %}">
+                <i class='fa fa-arrow-left'></i> Back </a>
+
+            <a class="btn btn-info btn-lg mt-0" style='width:250px' data-toggle="tooltip" data-placement="left"
+                title="Step 2 of creating a sales order, adding details" href="{% url 'transactions:sale-order-create-view' %}">
+                Next <i class='fa fa-arrow-right'></i></a>
+
+        </div>
+
+
+
+    </div>
+
+    <div id="wizard" class="form_wizard wizard_horizontal">
+        <ul class="wizard_steps">
+            <li>
+                <a class='selected' href="{% url 'transactions:sale-order-item-create-view' %}">
+                    <span class="step_no">1</span>
+                    <span class="step_descr">
+                        Fill order<br />
+                        <small></small>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a class='disabled' href="{% url 'transactions:sale-order-create-view' %}">
+                    <span class="step_no">2</span>
+                    <span class="step_descr">
+                        Sale order<br />
+                        <small></small>
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible " role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <ul class="messages">
+            <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+                <h2> {{ message }} </h2>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Order input <small>Form</small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li><a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+
+
+
+    <div class="x_content">
+        <h2><small>Current order:</small></h2>
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                    <tr class="headings">
+                        <th class="column-title"> #</th>
+                        <th class="column-title">Product </th>
+                        <th class="column-title">Quantity </th>
+                        <th class="column-title">Type </th>
+                        <th class="column-title">Actions </th>
+
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in sales %}
+                    <tr class="even pointer">
+                        <td class="">{{forloop.counter}}</td>
+                        <td class=" "><a
+                                href="{%url 'transactions:items-detail-view' pk=item.id %}">{{item.item}}</a>
+                        </td>
+                        <td class=" ">{{item.quantity}}</td>
+                        <td class=" ">{{item.product_type}}</td>
+                        <td class=" ">
+                            <a class="btn btn-info" href="#"><i class="fa fa-plus"></i></a>
+                            <a class="btn btn-danger" href="#"><i class="fa fa-remove"></i></a>
+
+
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <div class="x_content">
+        <form id='#step-1' class="form-label-left input_mask" method="post">
+            {% csrf_token %}
+            <label class='col-md-12 col-sm-12'> Item
+                <div class="col-md-12 col-sm-12  form-group has-feedback">
+                    {{ form.item }}
+                    <span class="fa fa-circle form-control-feedback left" aria-hidden="true"></span>
+                </div>
+            </label>
+            <label class='col-md-12 col-sm-12'> Type
+                <div class="col-md-12 col-sm-12  form-group has-feedback">
+                    {{ form.product_type }}
+                    <span class="fa fa-circle form-control-feedback left" aria-hidden="true"></span>
+                </div>
+            </label>.<br>
+            <label class='col-md-12 col-sm-12'>
+                <div class="col-md-12 col-sm-12  form-group has-feedback">
+                    {{ form.quantity }}
+                    <span class="fa fa-circle form-control-feedback left" aria-hidden="true"></span>
+                </div>
+            </label>
+
+            <div class="form-group row">
+                <div class="col-md-12 col-sm-12  offset-md-5">
+                    <button class="btn btn-primary" type="reset">Reset</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+
+        </form>
+
+ 
+
+
+
+
+
+    </div>
+</div>
+
+
+{% endblock content %}

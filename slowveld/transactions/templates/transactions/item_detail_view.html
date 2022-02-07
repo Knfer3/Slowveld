@@ -1,0 +1,115 @@
+{% extends '_base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<div class="clearfix"></div>
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="display-4"><i class="glyphicon glyphicon-shopping-cart"></i> Item detail</h1>
+            <hr>
+            <p class="lead">Add item to cart <br>
+
+            </p>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-info btn-lg mt-0" style='width:250px' data-toggle="tooltip" data-placement="left"
+                title="Back to cart" href="{% url 'transactions:items-list-view' %}">
+                <i class='fa fa-arrow-left'></i> Back </a>
+        </div>
+    </div>
+
+
+
+
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible " role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <ul class="messages">
+            <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+                <h2> {{ message }} </h2>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Item</h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li><a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+
+        <!-- <div class="col-md-7 col-sm-7 ">
+                            <div class="product-image">
+                                <img src="images/prod-1.jpg" alt="..." />
+                            </div>
+                            <div class="product_gallery">
+                                <a>
+                                    <img src="images/prod-2.jpg" alt="..." />
+                                </a>
+                                <a>
+                                    <img src="images/prod-3.jpg" alt="..." />
+                                </a>
+                                <a>
+                                    <img src="images/prod-4.jpg" alt="..." />
+                                </a>
+                                <a>
+                                    <img src="images/prod-5.jpg" alt="..." />
+                                </a>
+                            </div>
+                        </div> -->
+
+        <div class="col-md-7 col-sm-7 " style="border:0px solid #e5e5e5;">
+
+            <h3 class="display-5">{{item.item}}<small> ({{item.category}})</small></h3>
+
+
+            <p>{{item.description}}</p>
+
+            <div class="">
+                <div class="product_price">
+
+                    <h1 class="price">R {{item.cost_price}}<small> /{{item.uom_quantity}}
+                            {{item.uom}}</small></h1>
+                    <span class="price-tax">{%if item.sold_in_packs%}Sold as pack {% else %}Sold
+                        individually{% endif%}</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-5 col-sm-5 " style="border:0px solid #e5e5e5;">
+            <form class='form-label-left input_mask' method="post">
+                {% csrf_token %}
+                <div class="col-md-10 col-sm-10 my-3">
+                    <label class="col-md-12 col-sm-12 display-5"> Quantity to add to cart</label>
+                    <div class="col-md-8 col-sm-8 form-group has-feedback" data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Add exact item amount, not pack amount. If 'sold in packs' items will be round up to next pack size">
+                        {{ item_form.uom_quantity_purchased }}
+                        <span class="fa fa-money form-control-feedback left" aria-hidden="true"></span>
+                    </div>
+
+                    <button class="btn btn-success col-md-2 col-sm-2 " type="submit">Add</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+    {% endblock content %}

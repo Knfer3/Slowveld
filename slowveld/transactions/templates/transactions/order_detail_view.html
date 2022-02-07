@@ -1,0 +1,151 @@
+{% extends '_base.html' %}
+{% load static%}
+
+
+{% block content %}
+
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Order Details<small> details</small></h3>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+
+                    <div class="col-md-9 col-sm-9  ">
+
+                        <ul class="stats-overview">
+                            
+                                <a class="btn btn-info btn-sm mt-0" href="{% url 'transactions:purchase-order-list-view' %}"><i class='fa fa-arrow-left'></i> Back </a>
+
+                            
+                            <li>
+                                <span class="name"> Order Cost <small>(incl Delivery)</small> </span>
+                                <span class="value text-success"> R {{order.order_cost}} </span>
+                            </li>
+                            <li>
+                                <span class="name"> Date ordered </span>
+                                <span class="value text-success"> {{order.created_at}}</span>
+                            </li>
+                            <li class="hidden-phone">
+                                <span class="name"> Date received </span>
+                                <span class="value text-success"> {{order.updated_at}} </span>
+                            </li>
+                        </ul>
+                        <br />
+
+
+
+                        <div class="col-md-12 col-sm-12  ">
+                            <div class="x_panel">
+                              <div class="x_title">
+                                <h2>Items <small>cart</small></h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                  </li>
+                                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                  </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                              </div>
+                              <div class="x_content">
+            
+                                <table class="table table-striped">
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Item</th>
+                                      <th>Description</th>
+                                      <th>Quantity</th>
+                                      <th>Cost price</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                      {% for i in order.item.all %}
+                                    <tr>
+                                      <th scope="row">{{forloop.counter}}</th>
+                                      <td>{{i.item}}</td>
+                                      <td>{{i.description}}</td>
+                                      <td>{{i.uom_quantity_purchased}} {{i.uom}}</td>
+                                      <td>R {{i.cost_price}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                  </tbody>
+                                </table>
+            
+                              </div>
+                            </div>
+                          </div>
+
+                    </div>
+
+                    <!-- start project-detail sidebar -->
+                    <div class="col-md-3 col-sm-3  ">
+
+                        <section class="panel">
+
+                            <div class="x_title">
+                                <h2>Order Description</h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+                                <form method="POST" >
+                                    {% csrf_token %}
+                                <h3 class="green"><i class="fa fa-arrows"></i> {{order.purchase_order_reference}}</h3>
+                                {% if order.received %}
+                                <button class="btn btn-success">Order Received</button>
+                                <br /> 
+                                <small>{{order.updated_at}}</small>
+                                <br />
+                                {% else %}
+                                <button class="btn btn-warning">Order outstanding</button>
+                                <br />
+                                <small>{{order.updated_at}}</small>
+                                <br />
+                                {% endif %}
+                                 </form>
+                                <div class="project_detail mt-3">
+
+                                    <p class="title">Supplier</p>
+                                    <p>{{order.supplier}}</p>
+                                    <p class="title">Delivery fee</p>
+                                    <p>R {{order.delivery_price}}</p>
+                                </div>
+
+                                <br />
+                               
+                                <br />
+
+
+                            </div>
+
+                        </section>
+
+                    </div>
+                    <!-- end project-detail sidebar -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
