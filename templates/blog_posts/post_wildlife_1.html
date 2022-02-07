@@ -1,0 +1,27 @@
+<h1>The First Blog post Test</h1>
+
+<h2>Need to make it look nice</h2>
+
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero veniam sed nam non. Est vero maxime amet ab voluptatibus fugiat obcaecati qui ad commodi, reiciendis quidem quaerat, nemo, maiores animi.</p>
+
+
+<img src="{{ post.author.image.url}}"  alt="lol">
+
+
+<p>Testing what some tags look like</p>
+<code>
+class BlogListView(ListView):
+<pre> 
+   model = Blog
+   template_name = 'blog/blog_list_view.html'
+   # context_object_name ='blog_posts'
+</pre> 
+<br>
+   def get_context_data(self, **kwargs):
+   <pre>
+      context = super().get_context_data(**kwargs)
+     context["posts_wildlife"] = Blog.objects.filter(category__category="Wildlife")
+     context["posts_coding"] = Blog.objects.filter(category__category="Coding") 
+     return context
+    </pre>
+</code>
