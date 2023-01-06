@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView, View, TemplateView, FormView
 from django.shortcuts import render
-from slowveld.transactions.models import SaleOrder
+from slowveld_old.transactions.models import SaleOrder
 from .models import Blog
 from django.contrib.auth.mixins import LoginRequiredMixin
 

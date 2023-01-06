@@ -21,7 +21,15 @@ class Timestamps(models.Model):
 
 
 
+class UOM(models.Model):
+    '''
+    Unit of measurement
+    '''
+    name=models.CharField(max_length=100, unique=True)
+    code=models.CharField(max_length=10)
 
+    def __str__(self):
+        return self.name
 
 
 class Pricing(models.Model):
@@ -45,12 +53,7 @@ class Status(models.Model):
 
 
 
-class UOM(models.Model):
-    name=models.CharField(max_length=100, unique=True)
-    code=models.CharField(max_length=10)
 
-    def __str__(self):
-        return self.name
 
 
 class Type(models.Model):

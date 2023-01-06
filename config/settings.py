@@ -46,9 +46,18 @@ INSTALLED_APPS = [
     'apps.utils.apps.UtilsConfig',
 
 
-    # slowveld
-    'slowveld.transactions.apps.TransactionsConfig',
-    'slowveld.logistics.apps.LogisticsConfig',
+    # slowveld - OLD 
+    'slowveld_old.transactions.apps.TransactionsConfig',
+    'slowveld_old.logistics.apps.LogisticsConfig',
+
+    # Inventory Management 
+    'Inventory_management.inputs.apps.InputsConfig',
+    'Inventory_management.product.apps.ProductConfig',
+    'Inventory_management.sales.apps.SalesConfig',
+    'Inventory_management.shipping.apps.ShippingConfig',
+    'Inventory_management.stock.apps.StockConfig',
+    'Inventory_management.transactions_log.apps.TransactionsLogConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -88,10 +97,21 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('PG_DB_NAME'), 
+        'USER': config('PG_DB_USER'), 
+        'PASSWORD': config('PG_DB_PASSWORD'),
+        'HOST': config('PG_DB_HOST'), 
+        'PORT': config('PG_DB_PORT'),
     }
 }
 

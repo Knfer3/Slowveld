@@ -1,0 +1,17 @@
+It is complicated to open slowveld. 
+Follow instructions below step by step.
+
+
+1. Open vscode 
+2. click control + ` - this will open a command line`(terminal) at the bottom of the interface
+3. on the top right of the terminal, it will say powershell, then a '+'then a drop down. Click on the dropdown
+4. from the drop down click "command prompt"
+5. Delete the powershell terminal
+6. In the Command prompt click D:
+7. copy/paste --> cd D:\Documents\slowveld
+8. copy/paste --> .\.venv\Scripts\activate
+9. copy/paste --> python manage.py runserver
+10: open chrom broswer in icognito mode
+11. add url --> http://127.0.0.1:8000/
+12. Log into your admin account to start using the inventory management system
+

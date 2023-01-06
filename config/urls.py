@@ -37,7 +37,8 @@ urlpatterns = [
 
     # path to apps
     path('', include('apps.home.urls')),
-    path('slowveld/', include('slowveld.transactions.urls')),
+    path('slowveld/', include('slowveld_old.transactions.urls')),
+    # path('inventory_management', include('Inventory_management.inputs.urls')), --> WHEN READY
 
 
     # API

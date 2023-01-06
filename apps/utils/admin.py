@@ -21,7 +21,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Pricing,PricingAdmin)
 admin.site.register(Status,StatusAdmin)
-admin.site.register(UOM,UOMAdmin)
+# admin.site.register(UOM,UOMAdmin)
 admin.site.register(Type,TypeAdmin)
 admin.site.register(Category,CategoryAdmin)
 
